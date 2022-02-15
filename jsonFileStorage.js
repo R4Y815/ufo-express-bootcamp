@@ -20,10 +20,9 @@ export function write(filename, jsonContentObj, callback) {
       callback(writeErr, null);
       return;
     }
-    
     // Call client-provided callback on successful write
     callback(/* null,  */jsonContentStr);
-    console.log('Write success at WRITE/EDIT44');
+    console.log('Write success at WRITE/EDIT');
   });
 }
 
@@ -40,6 +39,7 @@ export function read(filename, callback) {
       console.error('Read error', readErr);
       // Allow client to handle error in their own way
       callback(readErr, null);
+      console.log('Null entry in Database');
       return;
     }
 
@@ -48,7 +48,6 @@ export function read(filename, callback) {
 
     // Call client callback on file content
     callback(null, jsonContentObj);
-
     console.log('Client Callback on file content in READ');
   };
 

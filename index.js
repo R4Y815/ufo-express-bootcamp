@@ -1,6 +1,6 @@
 import express from 'express';
 import methodOverride from 'method-override';
-import { add, read, edit } from './jsonFileStorage.js';
+import { add, read, edit, write } from './jsonFileStorage.js';
 
 const app = express();
 const port = 3050;
@@ -44,13 +44,22 @@ app.get('/sighting/:index/edit', (request, response) => {
 });
 
 app.put('/sighting/:index', (request, response) => {
-  edit('data.json', (err, jsonData) => {
-    const { index } = request.params;
-    const { updatedContent } = request.body;
-    jsonData.sightings[index] = updatedContent;
-    read('data.json', (_, data) => {
-      const latestIndex = data.sightings.length - 1;
-      response.redirect(301, `http://localhost:${port}/sighting/${latestIndex}`);
+  const { index } = request.params;
+  console.log('requested params = ', request.params);
+  console.log('index =', index);
+
+  const { editedContent } = request.body;
+  console.log('request.body', request.body);
+  console.log('editedContent =', editedContent);
+  read('data.json', (err, data) => {
+    /* Replace the data in the object at the given index */
+    data.sightings[index] = request.body; /* var['key'][index] another way to access object array */
+    write('data.json', data, (err) => {
+      read('data.json', (err, data) => {
+        const content = { index: index, sighting: data.sightings[index] };
+        // Return HTML to client, merging "index" template with supplied data.
+        response.render('sighting', content);
+      });
     });
   });
 });
