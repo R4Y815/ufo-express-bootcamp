@@ -62,7 +62,7 @@
           <div class="row justify-content-center">
             <div class="row px-0 ">
               <div class ="col-12 px-0">
-                <form action ="/sighting/<%= index %>?_method=PUT" method="POST">
+                <form action ="/sighting/<%= index %>?_method=PUT" method="POST" enctype="multipart/form-data" >
                   <div>
                     <label for="summary" class="mb-2"><b>Summary:</b></label><br>  
                     <textarea name ="summary" id="summary" class="smBox mb-2" ><%=sighting.summary%></textarea>   

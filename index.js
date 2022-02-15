@@ -1,6 +1,6 @@
 import express from 'express';
 import methodOverride from 'method-override';
-import { add, read } from './jsonFileStorage.js';
+import { add, read, edit } from './jsonFileStorage.js';
 
 const app = express();
 const port = 3050;
@@ -27,7 +27,7 @@ app.get('/', (request, response) => {
 app.get('/sighting/:index', (request, response) => {
   read('data.json', (_, data) => {
     const { index } = request.params;
-    const content = { index, sighting: data.sightings[index] }; /* what is this? object? array? */
+    const content = { index: index, sighting: data.sightings[index] };
     // Return HTML to client, merging "index" template with supplied data.
     response.render('sighting', content);
   });
@@ -37,13 +37,13 @@ app.get('/sighting/:index/edit', (request, response) => {
   /* Retrieve current recipe data and render it */
   read('data.json', (err, jsonData) => {
     const { index } = request.params;
-    const content = { index, sighting: jsonData.sightings[index] };
+    const content = { index: index, sighting: jsonData.sightings[index] };
     /* pass the sighting Index to the edit form for the PUT request URL */
     response.render('edit', content);
   });
 });
 
-app.put('/sighting/:index?_method=PUT', (request, response) => {
+app.put('/sighting/:index', (request, response) => {
   edit('data.json', (err, jsonData) => {
     const { index } = request.params;
     const { updatedContent } = request.body;
@@ -54,7 +54,6 @@ app.put('/sighting/:index?_method=PUT', (request, response) => {
     });
   });
 });
-
 
 app.get('/sighting', (request, response) => {
   response.render('newSighting');

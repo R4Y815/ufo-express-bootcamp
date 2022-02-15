@@ -20,9 +20,10 @@ export function write(filename, jsonContentObj, callback) {
       callback(writeErr, null);
       return;
     }
-    console.log('Write success!');
+    
     // Call client-provided callback on successful write
     callback(/* null,  */jsonContentStr);
+    console.log('Write success at WRITE/EDIT44');
   });
 }
 
