@@ -33,28 +33,28 @@ app.get('/sighting/:index', (request, response) => {
   });
 });
 
-app.get('/sightingNeo/:index', (request, response) => {
-  read('data.json', (_, data) => {
-    const { index } = request.params;
-    console.log(index);
-    const content = data.sightings;
-    /* pass the sighting Index to the edit form for the PUT request URL */
-    console.log(content);
-
-    response.render('sightingNeo', { content });
-  });
-});
-app.get('sighting/:index/edit', (request, response) => {
+app.get('/sighting/:index/edit', (request, response) => {
   /* Retrieve current recipe data and render it */
   read('data.json', (err, jsonData) => {
     const { index } = request.params;
-    const sighting = jsonData.sightings[index];
+    const content = { index, sighting: jsonData.sightings[index] };
     /* pass the sighting Index to the edit form for the PUT request URL */
-    sighting.index = index;
-    const ejsData = { sighting };
-    response.render('edit', ejsData);
+    response.render('edit', content);
   });
 });
+
+app.put('/sighting/:index?_method=PUT', (request, response) => {
+  edit('data.json', (err, jsonData) => {
+    const { index } = request.params;
+    const { updatedContent } = request.body;
+    jsonData.sightings[index] = updatedContent;
+    read('data.json', (_, data) => {
+      const latestIndex = data.sightings.length - 1;
+      response.redirect(301, `http://localhost:${port}/sighting/${latestIndex}`);
+    });
+  });
+});
+
 
 app.get('/sighting', (request, response) => {
   response.render('newSighting');

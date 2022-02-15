@@ -48,7 +48,7 @@
 <div class ="container">
   <div class="text-center">
   <p></p>
-  <h2>Sighting Index <%= sighting.index %> </h2>
+  <h2>Sighting Index <%= index %> </h2>
   </div>
 </div>
 <p></p>
@@ -62,34 +62,34 @@
           <div class="row justify-content-center">
             <div class="row px-0 ">
               <div class ="col-12 px-0">
-                <form action="/sighting/<%= sighting.index %>?_method=PUT" method="POST">
+                <form action ="/sighting/<%= index %>?_method=PUT" method="POST">
                   <div>
                     <label for="summary" class="mb-2"><b>Summary:</b></label><br>  
-                    <textarea name ="summary" id="summary" class="smBox mb-2"></textarea>   
+                    <textarea name ="summary" id="summary" class="smBox mb-2" ><%=sighting.summary%></textarea>   
                   </div>
                   <div>
                     <label for="datetime" class="mb-3"><b>Date_(space)_Time:</b></label>  
-                    <input type="text" name="datetime" id="datetime">
+                    <input type="text" name="datetime" id="datetime"  value="<%=sighting.datetime%>">
                   </div>
                   <div>
                     <label for="city" class="mb-3"><b>City:</b></label>  
-                    <input type="text" name="city" id="city">
+                    <input type="text" name="city" id="city"  value="<%=sighting.city%>">
                   </div>
                   <div>
                     <label for="state" class="mb-3" ><b>State:</b></label>  
-                    <input type="text" name="state" id="state">
+                    <input type="text" name="state" id="state" value="<%=sighting.state%>">
                   </div>
                   <div>
                     <label for="shape" class="mb-3"><b>Shape:</b></label>  
-                    <input type="text" name="shape" id="shape">   
+                    <input type="text" name="shape" id="shape" value="<%=sighting.shape%>">   
                   </div>
                   <div>
                     <label for="duration" class="mb-3"><b>Duration(mins):</b></label>  
-                    <input type="text" name="duration" id="duration">   
+                    <input type="text" name="duration" id="duration" value="<%=sighting.duration%>">   
                   </div>        
                   <div>
                     <label for="text" class="mb-1"><b>Report:</b></label><br>   
-                    <textarea name ="text" id="text" class="txtBox mb-3"></textarea>   
+                    <textarea name ="text" id="text" class="txtBox mb-3"><%=sighting.text%></textarea>   
                   </div>
                   <div class="row justify-content-center">
                     <div class="col-auto"><input type="submit" value="Submit"></div>
