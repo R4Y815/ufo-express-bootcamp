@@ -59,9 +59,11 @@
             </div>    
             <div class="row">
               <div class ="col-10"><i><%= sighting[`${i}`].summary %></i></div>
-              <div class ="col-2 text-end">
-                <button type="submit" class="btn-sm">Del</button>
-              </div>
+              <form action="/sighting/<%=i%>?_method=DELETE" method="POST">  
+                <div class ="col-2 text-end">
+                  <button type="submit" class="btn-sm">Del</button>
+                </div>
+              </form>  
             </div>   
           </div>
         </li>

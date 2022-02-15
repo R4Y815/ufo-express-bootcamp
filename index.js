@@ -33,16 +33,6 @@ app.get('/sighting/:index', (request, response) => {
   });
 });
 
-app.get('/sighting/:index/edit', (request, response) => {
-  /* Retrieve current recipe data and render it */
-  read('data.json', (err, jsonData) => {
-    const { index } = request.params;
-    const content = { index: index, sighting: jsonData.sightings[index] };
-    /* pass the sighting Index to the edit form for the PUT request URL */
-    response.render('edit', content);
-  });
-});
-
 app.put('/sighting/:index', (request, response) => {
   const { index } = request.params;
   console.log('requested params = ', request.params);
@@ -82,5 +72,29 @@ app.post('/sighting', (request, response) => {
     response.status(500).send('DB write error.');
   });
 });
+
+app.get('/sighting/:index/edit', (request, response) => {
+  /* Retrieve current recipe data and render it */
+  read('data.json', (err, jsonData) => {
+    const { index } = request.params;
+    const content = { index: index, sighting: jsonData.sightings[index] };
+    /* pass the sighting Index to the edit form for the PUT request URL */
+    response.render('edit', content);
+  });
+});
+
+app.delete('/sighting/:index', (request, response) => {
+  /* Remove element from DB at given index */
+  const { index } = request.params;
+  read('data.json', (err, data) => {
+    data.sightings.splice(index, 1);
+    write('data.json', data, (err) => {
+      response.redirect(301, `http://localhost:${port}/`);
+    });
+  });
+});
+
+
+
 
 app.listen(port, () => console.log('listening on Port:', port));
