@@ -1,0 +1,18 @@
+.dateTime {
+  height: 2rem;
+  width: 10rem;
+}
+
+.txtBox{
+  min-width: 82vw;
+  max-width: 82vw;
+  min-height: 25vh;
+  max-height: 33vh;
+}
+
+.smBox{
+  min-width: 82vw;
+  max-width: 82vw;
+  min-height: 7vh;
+  max-height: 10vh;
+}
