@@ -1,6 +1,7 @@
 import express from 'express';
 import methodOverride from 'method-override';
 import { add, read, edit, write } from './jsonFileStorage.js';
+import { checkNullEntry } from './validation.js';
 
 const app = express();
 const port = 3050;
@@ -22,6 +23,33 @@ app.get('/', (request, response) => {
     /* return html to client, displaying summarised sightings with info from the saved data array */
     response.render('home', { sighting });
   });
+});
+
+app.get('/shapes', (request, response) => {
+  read('data.json', (err, data) => {
+    const uniqueShapes = new Set();
+    data.sightings.forEach((sighting) => {
+      if(sighting.shape !== undefined) {
+        uniqueShapes.add(sighting.shape);
+        console.log(uniqueShapes);
+      }
+    });
+    response.render('shapeDirectory', { shapes: [...uniqueShapes]});
+  });
+});
+
+app.get('/shapes/:shape', (request, response) => {
+  const { shape } = request.params;
+  const { sort } = request.query;
+  read('data.json', (err, data) => {
+    const sighting = data.sightings.filter((sighting) => sighting.shape === shape);
+    /*     if (sort === 'asc') {
+      sightings.sort(compareState);
+    } else if (sort === 'dsc') {
+      sightings.sort((s1,s2) => -1 * compareState(s1, s2));
+    } */
+    response.render('sightingsByShape', { sighting });
+  })
 });
 
 app.get('/sighting/:index', (request, response) => {
@@ -59,10 +87,32 @@ app.get('/sighting', (request, response) => {
 });
 
 app.post('/sighting', (request, response) => {
+  /* console.log('request.body =', request.body); */
+  const formSubmitted = request.body;
+  const formData = JSON.parse(JSON.stringify(formSubmitted));
+  console.log(formData);
+  const checkResult = checkNullEntry(formData);
+  console.log('checkResult =', checkResult);
+  if (checkResult === 1) {
+    add('data.json', 'sightings', request.body, (callBack) => {
+      if (callBack) {
+        read('data.json', (_, data) => {
+          const latestIndex = data.sightings.length - 1;
+          response.redirect(301, `http://localhost:${port}/sighting/${latestIndex}`);
+        });
+        return;
+      }
+      response.status(500).send('DB write error.');
+    });
+  } else if (checkResult === 2) {
+    response.send('Please fill up all fields');
+  }
+
+});
+
+/* app.post('/sighting', (request, response) => {
   add('data.json', 'sightings', request.body, (callBack) => {
     if (callBack) {
-    /* redirect to newly created sighting entry with proper status code? */
-    /* try to reverse this and see if it works */
       read('data.json', (_, data) => {
         const latestIndex = data.sightings.length - 1;
         response.redirect(301, `http://localhost:${port}/sighting/${latestIndex}`);
@@ -71,7 +121,7 @@ app.post('/sighting', (request, response) => {
     }
     response.status(500).send('DB write error.');
   });
-});
+}); */
 
 app.get('/sighting/:index/edit', (request, response) => {
   /* Retrieve current recipe data and render it */

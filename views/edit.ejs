@@ -1,4 +1,5 @@
- <%- include('header'); -%>
+ <%- include('headerGlobal'); -%>
+ <h1 class="topSpacer"><p></p>.</h1>
  <p></p>
   <div class ="text-center">
   <h2>Sighting Index <%= index %> </h2>
@@ -44,6 +45,8 @@
                     <label for="summary" class="mb-2"><b>Summary:</b></label><br>  
                     <textarea name ="summary" id="summary" class="smBox mb-2" ><%=sighting.summary%></textarea>   
                   </div>
+                   <div>
+                  <input type="hidden" name="created_Date" value="edited-<%= Date() %>"></div>
                   <div class="row justify-content-center">
                     <div class="col-auto"><input type="submit" value="Submit"></div>
                   </div> 

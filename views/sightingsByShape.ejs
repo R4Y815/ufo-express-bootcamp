@@ -7,7 +7,7 @@
       <ul class="list-group list-group-flush">
         <p></p>
         <p></p>
-        <h3 class = "text-center">Sightings List</h3>
+        <h3 class = "text-center"><%= sighting[0].shape %> Shaped Sightings</h3>
         <p></p>
 
 <% for (let i = 0; i < sighting.length; i += 1) { %> 
@@ -15,19 +15,19 @@
           <div class="row">
             <div class="row">
               <div class="col">
-                <a href = "./sighting/<%= i %>"><u>Sighting Index <%= i %></u></a>
+                <a href = "/sighting/<%= i %>"><u>Sighting Index <%= i %></u></a>
               </div>
             </div>   
             <div class="row">
               <div class ="col-auto"><%= sighting[`${i}`].datetime.split(" ")[0]%></div> |
-              <div class ="col-auto"><%= sighting[`${i}`].shape %></div> |
+              <div class ="col-auto shpeTxt"><%= sighting[`${i}`].shape %></div> |
               <div class ="col-auto"><%= sighting[`${i}`].city %></div>
             </div>    
             <div class="row">
               <div class ="col-10"><i><%= sighting[`${i}`].summary %></i></div>
               <div class ="col-2 text-end">
                 <form action="/sighting/<%=i%>?_method=DELETE" method="POST">  
-                  <button type="submit" class="btn-sm">Del</button>
+                  <button type="submit" class="btn-sm" disabled>Del</button>
                 </form>  
               </div>
             </div>   

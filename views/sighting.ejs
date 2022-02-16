@@ -1,5 +1,6 @@
-<%-include('header');-%>
-
+<%-include('headerGlobal');-%>
+<h1 class="topSpacer"><p></p>.</h1>
+<h4 class="topSpacer"><p></p>.</h4>
 <div class="container ">
  <p></p>
   <div class="row justify-content-center">
@@ -21,7 +22,16 @@
                 <p></p>
                 <div><b>Description:</b><br> <%= sighting.text %></div>
                 <p></p>
+                <p></p>
+                <div class ="timeStmpTxt"> <%= sighting.created_Date %></div>
               </div> 
+              <div class ="row">
+                <div class ="col-12 d-flex justify-content-end">
+                        <form action="/sighting/<%=index%>/edit" method="GET">  
+                  <button type="submit" class="btn-sm">EDIT</button>
+                </form>  
+                </div>
+              </div>
             </div>     
           </div>
         </li>

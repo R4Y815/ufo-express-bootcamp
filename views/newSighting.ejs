@@ -1,6 +1,6 @@
-<%- include('header'); -%>
-  <p></p>
-  <h2>New Sightings Form: </h2>
+<%- include('headerGlobal'); -%>
+<h1 class="topSpacer"><p></p>.</h1>
+  
   </div>
 </div>
 <p></p>
@@ -9,7 +9,7 @@
     <div class="card " style="width: 90vw;">
       <ul class="list-group list-group-flush">
         <p></p>
-      <!--  <h3 class = "text-center">Sightings List</h3> -->
+         <h2 class="text-center">New Sightings Form: </h2>
         <li class="list-group-item ">
           <div class="row justify-content-center">
             <div class="row px-0 ">
@@ -43,9 +43,12 @@
                     <label for="text" class="mb-1"><b>Report:</b></label><br>   
                     <textarea name ="text" id="text" class="txtBox mb-3"></textarea>   
                   </div>
+                  <div>
+                  <input type="hidden" name="created_Date" value="created-<%= Date() %>"></div>
                   <div class="row justify-content-center">
                     <div class="col-auto"><input type="submit" value="Submit"></div>
                   </div> 
+                  </form>
                 </form>
               </div> 
             </div>     
