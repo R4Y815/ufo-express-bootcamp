@@ -65,7 +65,6 @@ app.put('/sighting/:index', (request, response) => {
   const { index } = request.params;
   console.log('requested params = ', request.params);
   console.log('index =', index);
-
   const { editedContent } = request.body;
   console.log('request.body', request.body);
   console.log('editedContent =', editedContent);
@@ -105,7 +104,10 @@ app.post('/sighting', (request, response) => {
       response.status(500).send('DB write error.');
     });
   } else if (checkResult === 2) {
-    response.send('Please fill up all fields');
+    console.log(request.url);
+    const prevRoute = request.url;
+   /*  response.send('Please fill up all fields'); */
+    response.redirect(301, `http://localhost:${port}${prevRoute}`);
   }
 
 });
